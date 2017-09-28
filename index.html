@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Dynamic Post Timestamp</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.0.css">
+    <script src="simpleDate.js"></script>
+    <script>
+    	//Whenever the page loads, execute the function
+    	window.onload = function(){
+    		//Stores all <a> tags into an array
+    		var links = document.getElementsByTagName("a");
+    		//Runs through the links array
+    		for(var i=0; i<links.length; i++){
+    			//If there is a title attribute with a value in it, then...
+    			if(links[i].title){
+    				//Store the simpleDate into var date
+    				var date = simpleDate(Date.now(), links[i].title);
+    				/*
+    				If a value is stored within date, set the innerHTML of the current
+    				<a> tag to the value stored within date
+    				*/
+    				if(date){links[i].innerHTML = date}
+    			}
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+	<ul>
+		<li class="entry" id="post57">
+			<p>Our First Date</p>
+			<small class="extra">
+				Posted <a href="first" title="2017-09-27T21:53:32.054Z">September 27th, 2017</a>
+				by <a href="/kieran/">Kieran</a>
+			</small>
+		</li>
+		<li class="entry" id="post57">
+			<p>Our Second Date</p>
+			<small class="extra">
+				Posted <a href="second" title="2017-09-27T23:45:32.054Z">September 27th, 2017</a>
+				by <a href="/kieran2/">2Kieran4u</a>
+			</small>
+		</li>
+		<!--EXAMPLE.. ENTER CURRENT DATE INTO TITLE-->
+		<li class="entry" id="post57">
+			<p>Our Current Date</p>
+			<small class="extra">
+				Posted <a href="third" title="2017-09-27T13:43:32.054Z">September 27th, 2017</a>
+				by <a href="/kieran3/">3Kieran5u</a>
+			</small>
+		</li>
+	</ul>
+	<!--Displays QUnit-->
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<!--Imports QUnit for use-->
+	<script src="https://code.jquery.com/qunit/qunit-2.4.0.js"></script>
+	<script>
+   	//This is our unit test
+   	QUnit.test( "simpleDate basics", function(assert) {
+	    var now = "2017-09-28T14:01:34.549Z";
+	    assert.equal(simpleDate(now, "2017-09-28T14:01:34.549Z"), "just now");
+	    assert.equal(simpleDate(now, "2017-09-28T14:00:34.549Z"), "1 minute ago");
+        assert.equal(simpleDate(now, "2017-09-28T13:01:34.549Z"), "1 hour ago");
+        assert.equal(simpleDate(now, "2017-09-27T14:01:34.549Z"), "Yesterday");
+        assert.equal(simpleDate(now, "2017-09-27T14:01:34.549Z"), "2 days ago");
+        assert.equal(simpleDate(now, "2017-09-29T14:01:34.549Z"), undefined);
+	});
+    </script>
+
+</body>
+</html>
